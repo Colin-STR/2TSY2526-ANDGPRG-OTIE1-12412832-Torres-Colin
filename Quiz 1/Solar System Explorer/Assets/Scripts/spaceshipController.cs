@@ -18,4 +18,9 @@ public class spaceshipController : MonoBehaviour
 
         transform.Rotate(pitch, yaw, 0f, Space.Self);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("Ship hit: " + other.gameObject.name);
+    }
 }
