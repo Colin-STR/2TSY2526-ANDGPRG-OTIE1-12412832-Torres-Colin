@@ -20,7 +20,7 @@ public class playerBullet : MonoBehaviour
         if (other.CompareTag("Enemy"))
         {
             Destroy(other.gameObject);
-            //gameManager.Instance.AddScore(100);
+            uiManager.Instance.UpdateScore(100);
             Destroy(gameObject);
         }
     }

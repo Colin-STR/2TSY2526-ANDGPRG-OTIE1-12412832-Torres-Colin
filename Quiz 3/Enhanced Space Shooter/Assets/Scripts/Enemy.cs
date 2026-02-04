@@ -30,16 +30,22 @@ public class Enemy : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
         if (Time.time > nextFireTime)
         {
             EnemyShoot();
             nextFireTime = Time.time + fireRate + Random.Range(-0.2f, 0.2f);
         }
+        if (transform.position.z < -5f)
+        {
+            Destroy(gameObject);
+        }
     }
 
     void EnemyShoot()
     {
-        Instantiate(enemyBulletPrefab, transform.position, Quaternion.identity);
+        if (GameObject.FindWithTag("Player") != null)
+        {
+            Instantiate(enemyBulletPrefab, transform.position, Quaternion.identity);
+        }            
     }
 }

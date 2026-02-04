@@ -53,9 +53,12 @@ public class Player : MonoBehaviour
     {
         rb.linearVelocity = moveInput * moveSpeed;
     }
-
     void Shoot()
     {
+        if (audioManager.Instance != null)
+        {
+            audioManager.Instance.PlaySFX(audioManager.Instance.shootSFX);
+        }
         switch (shotMode)
         {
             case 1:
@@ -73,9 +76,20 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other) 
+    {
+        if (other.CompareTag("Enemy") || other.CompareTag("EnemyBullet"))
+        {
+            TakeDamage(1);
+            Destroy(other.gameObject);
+            Debug.Log("Player hit an enemy!");
+        }
+    }
+
     public void TakeDamage(int amount)
     {
         currentHealth -= amount;
+        uiManager.Instance.UpdateHealth(currentHealth, maxHealth);
         Debug.Log("Player Health: " + currentHealth);
 
         if (currentHealth <= 0)
@@ -86,8 +100,20 @@ public class Player : MonoBehaviour
 
     void Die()
     {
+        if (audioManager.Instance != null)
+        {
+            audioManager.Instance.PlaySFX(audioManager.Instance.playerDeathSFX);
+        }
         Debug.Log("GAME OVER");
-        //gameManager.Instance.EndGame();
+        uiManager.Instance.ShowGameOver();
         Destroy(gameObject);
+    }
+
+    void LateUpdate()
+    {
+        Vector3 currentPos = transform.position;
+        float clampedX = Mathf.Clamp(currentPos.x, -10f, 10f);
+        float clampedZ = Mathf.Clamp(currentPos.z, -3f, 5f);
+        transform.position = new Vector3(clampedX, currentPos.y, clampedZ);
     }
 }
