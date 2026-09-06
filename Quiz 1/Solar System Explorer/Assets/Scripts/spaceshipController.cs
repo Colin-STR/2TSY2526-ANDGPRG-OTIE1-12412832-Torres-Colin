@@ -1,10 +1,14 @@
 using UnityEngine;
+using TMPro;
 
 public class spaceshipController : MonoBehaviour
 {
     [Header("Movement stats")]
     public float speed = 20f;
     public float rotationSpeed = 100f;
+
+    [Header("UI Reference")]
+    public TextMeshProUGUI planetText;
 
     void Update()
     {
@@ -16,11 +20,22 @@ public class spaceshipController : MonoBehaviour
         float pitch = -pitchInput * rotationSpeed * Time.deltaTime;
         float yaw = yawInput * rotationSpeed * Time.deltaTime;
 
-        transform.Rotate(pitch, yaw, 0f, Space.Self);
+        transform.Rotate(pitch, yaw, 0f, Space.World);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Ship hit: " + other.gameObject.name);
+        if (planetText != null)
+        {
+            planetText.text = "Hitting: " + other.gameObject.name;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (planetText != null)
+        {
+            planetText.text = "Approaching next planet....";
+        }
     }
 }
