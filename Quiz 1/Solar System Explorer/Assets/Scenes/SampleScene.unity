@@ -1570,8 +1570,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beeacdb37a21c824384b0414f8266527, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::spaceshipController
-  speed: 40
-  rotationSpeed: 40
+  speed: 80
+  rotationSpeed: 100
   planetText: {fileID: 2142346465}
 --- !u!54 &1634589126
 Rigidbody:
